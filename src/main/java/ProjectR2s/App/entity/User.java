@@ -25,6 +25,12 @@ public class User {
     @Column(name = "created_date")
     private LocalDate createDate;
 
+    // Quan hệ One-to-One với lớp Address
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
 //
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 //    private Cart cart;

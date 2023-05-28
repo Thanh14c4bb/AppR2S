@@ -5,6 +5,7 @@ import ProjectR2s.App.entity.User;
 import ProjectR2s.App.service.UserService;
 import ProjectR2s.App.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +46,15 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam("userName") String userName,
+                                        @RequestParam("password") String password) {
+        String token = userService.login(userName, password);
+        if (token != null) {
+            return ResponseEntity.ok(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

@@ -1,2 +1,18 @@
-package ProjectR2s.App.dto;public class AddressDto {
+package ProjectR2s.App.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AddressDto {
+    private String street;
+    private String city;
+
+
+
+    public void setId(Long id) {
+    }
 }

@@ -10,4 +10,6 @@ public interface UserService {
     User getUserById(int id);
     User updateUser(int id, UserRegistrationDto registrationRequest);
     void deleteUser(int id);
+//    User findByUserName(String userName);
+    String login(String userName, String password);
 }

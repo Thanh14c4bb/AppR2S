@@ -7,16 +7,19 @@ import ProjectR2s.App.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
+
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
@@ -36,7 +39,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Username already exists");
         }
 
-        // Mã hóa password bằng Bcrypt
+        // Mã hóa password bằng BCrypt
         String encodedPassword = passwordEncoder.encode(password);
 
         // Tạo mới user
@@ -44,20 +47,22 @@ public class UserServiceImpl implements UserService {
         newUser.setUserName(userName);
         newUser.setPassword(encodedPassword);
         newUser.setCreateDate(LocalDate.now());
-//        newUser.setStatus(true);
 
         // Lưu user vào cơ sở dữ liệu
         return userRepository.save(newUser);
     }
+
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
     @Override
     public User getUserById(int id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
+
     @Override
     public User updateUser(int id, UserRegistrationDto registrationRequest) {
         User existingUser = getUserById(id);
@@ -75,8 +80,40 @@ public class UserServiceImpl implements UserService {
         // Lưu user đã cập nhật vào cơ sở dữ liệu
         return userRepository.save(existingUser);
     }
+
     @Override
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public String login(String userName, String password) {
+        User user = userRepository.getByUserName(userName);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            // Xử lý trường hợp đăng nhập thành công
+            String token = generateToken(user.getUserName());
+            return token;
+        } else {
+            // Xử lý trường hợp đăng nhập thất bại
+            return null;
+        }
+    }
+
+    private String generateToken(String userName) {
+        // Code để tạo token từ username
+        // Ví dụ: return JWTUtil.generateToken(userName);
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
+

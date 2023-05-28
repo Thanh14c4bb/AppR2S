@@ -2,12 +2,15 @@ package ProjectR2s.App.dto;
 
 import lombok.Data;
 
+import java.util.List;
 
 
 @Data
 public class ProductDTO {
     private Long id;
     private String name;
+//    private List<VariantProductDTO> variants;
+
 
     public ProductDTO() {
     }
@@ -32,4 +35,6 @@ public class ProductDTO {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
