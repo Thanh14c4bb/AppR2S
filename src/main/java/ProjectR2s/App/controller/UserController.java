@@ -53,6 +53,7 @@ public class UserController {
         String token = userService.login(userName, password);
         if (token != null) {
             return ResponseEntity.ok(token);
+
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
